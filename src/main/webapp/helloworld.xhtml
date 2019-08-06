@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
     <title>PrimeFaces Hello World Example</title>
@@ -16,28 +18,29 @@
             <h:panelGrid columns="2">
                 <h:outputText value="Add value"
                               style="vertical-align: top; width: 200px;"/>
-                <p:selectOneMenu
+                <h:selectOneMenu
                         widgetVar="type" id="type"
                         style="width: 350px"
-                        value="#{helloWorld.selectedType}">
+                        value="#{helloWorld.selectedType}"
+                        onchange="submit()"
+                        valueChangeListener="#{helloWorld.change}">
                     <f:selectItem itemValue="#{null}" itemLabel=""/>
-                    <f:selectItems value="#{helloWorld.availableFields}" var="def" itemLabel="#{def}" itemValue="#{def}"/>
-                    <p:ajax event="change"
-                            update="main"
-                            listener="#{helloWorld.change(helloWorld.selectedType)}"/>/>
-                </p:selectOneMenu>
+                    <f:selectItems value="#{helloWorld.availableFields}" var="def" itemLabel="#{def}"
+                                   itemValue="#{def}"/>
+                </h:selectOneMenu>
             </h:panelGrid>
             <h:panelGroup id="panelRepeatWrapper">
-                <c:forEach id="panelRepeat" items="#{helloWorld.selectedFields}" var="field">
+                <ui:repeat id="panelRepeat" value="#{helloWorld.selectedFields.toArray()}" var="field">
                     <h:panelGrid columns="3">
                         <h:outputText value="#{field}"
                                       style="vertical-align: top; width: 200px;"/>
-                        <h:inputTextarea value="#{helloWorld.values[field]}"
+                        <p:inputTextarea value="#{helloWorld.values[field]}"
                                          style="width: 550px; height: 50px;"/>
-                        <p:commandButton value="x" action="#{helloWorld.onDelete(field)}" update="main">
+
+                        <p:commandButton value="x" action="#{helloWorld.onDelete(field)}" update="main" onclick="submit()">
                         </p:commandButton>
                     </h:panelGrid>
-                </c:forEach>
+                </ui:repeat>
             </h:panelGroup>
         </p:panel>
     </h:form>

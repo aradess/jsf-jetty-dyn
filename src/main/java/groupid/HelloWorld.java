@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -56,8 +57,11 @@ public class HelloWorld {
         this.values = values;
     }
 
-    public void change(String type) {
-        Optional<String> f = availableFields.stream().filter(s -> s.equals(type)).findFirst();
+    public void change(ValueChangeEvent type) {
+        if (type == null || type.getNewValue() == null || type.getNewValue() == "") {
+            return;
+        }
+        Optional<String> f = availableFields.stream().filter(s -> s.equals(type.getNewValue())).findFirst();
         selectedFields.add(f.get());
         availableFields.remove(f.get());
         values.put(f.get(), null);
@@ -78,3 +82,9 @@ public class HelloWorld {
         this.selectedType = selectedType;
     }
 }
+
+//<!--                        <p:commandButton value="x" action="#{helloWorld.onDelete(field)}"-->
+//<!--                                         update="main panelRepeatWrapper type">-->
+//<!--                            <p:ajax event="click"-->
+//<!--                                    update="main panelRepeatWrapper"/>-->
+//<!--                        </p:commandButton>-->
