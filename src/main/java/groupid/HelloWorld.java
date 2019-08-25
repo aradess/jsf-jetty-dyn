@@ -3,7 +3,9 @@ package groupid;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -76,5 +78,14 @@ public class HelloWorld {
 
     public void setSelectedType(String selectedType) {
         this.selectedType = selectedType;
+    }
+
+    public void fieldValue(AjaxBehaviorEvent e) {
+        if (e.getSource() instanceof UIInput) {
+            UIInput input = (UIInput) e.getSource();
+            Object value = input.getValue();
+            String id = input.getId();
+            values.put(id.substring(2), value.toString());
+        }
     }
 }

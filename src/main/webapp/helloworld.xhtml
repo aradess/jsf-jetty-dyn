@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
@@ -21,10 +22,12 @@
                         style="width: 350px"
                         value="#{helloWorld.selectedType}">
                     <f:selectItem itemValue="#{null}" itemLabel=""/>
-                    <f:selectItems value="#{helloWorld.availableFields}" var="def" itemLabel="#{def}" itemValue="#{def}"/>
+                    <f:selectItems value="#{helloWorld.availableFields}" var="def" itemLabel="#{def}"
+                                   itemValue="#{def}"/>
                     <p:ajax event="change"
                             update="main"
-                            listener="#{helloWorld.change(helloWorld.selectedType)}"/>/>
+                            listener="#{helloWorld.change(helloWorld.selectedType)}"/>
+                    />
                 </p:selectOneMenu>
             </h:panelGrid>
             <h:panelGroup id="panelRepeatWrapper">
@@ -32,8 +35,10 @@
                     <h:panelGrid columns="3">
                         <h:outputText value="#{field}"
                                       style="vertical-align: top; width: 200px;"/>
-                        <h:inputTextarea value="#{helloWorld.values[field]}"
-                                         style="width: 550px; height: 50px;"/>
+                        <p:inputTextarea id="#{'id'.concat(field)}" value="#{helloWorld.values[field]}"
+                                         style="width: 550px; height: 50px;">
+                            <p:ajax event="change" listener="#{helloWorld.fieldValue}"/>
+                        </p:inputTextarea>
                         <p:commandButton value="x" action="#{helloWorld.onDelete(field)}" update="main">
                         </p:commandButton>
                     </h:panelGrid>
