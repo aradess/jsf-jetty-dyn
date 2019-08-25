@@ -14,34 +14,36 @@
 
 <h:body>
     <h:form>
-        <p:panel id="main">
-            <h:panelGrid columns="2">
+        <p:panel id="main2">
+            <h:panelGrid  columns="2">
                 <h:outputText value="Add value"
                               style="vertical-align: top; width: 200px;"/>
-                <h:selectOneMenu
-                        widgetVar="type" id="type"
+                <p:selectOneMenu
+                        widgetVar="type" id="type2"
                         style="width: 350px"
-                        value="#{helloWorld.selectedType}"
-                        onchange="submit()"
-                        valueChangeListener="#{helloWorld.change}">
-                    <f:selectItem itemValue="#{null}" itemLabel=""/>
-                    <f:selectItems value="#{helloWorld.availableFields}" var="def" itemLabel="#{def}"
-                                   itemValue="#{def}"/>
-                </h:selectOneMenu>
+                        value="#{helloWorld.selectedType}">
+                    <f:selectItem  itemLabel=""/>
+                    <f:selectItems value="#{helloWorld.availableFields}" var="def" itemLabel="#{def}" itemValue="#{def}"/>
+                    <p:ajax event="change"
+                            update="main2"
+                            listener="#{helloWorld.change2()}"/>/>
+                </p:selectOneMenu>
             </h:panelGrid>
-            <h:panelGroup id="panelRepeatWrapper">
-                <ui:repeat id="panelRepeat" value="#{helloWorld.selectedFields.toArray()}" var="field">
-                    <h:panelGrid columns="3">
-                        <h:outputText value="#{field}"
-                                      style="vertical-align: top; width: 200px;"/>
-                        <p:inputTextarea value="#{helloWorld.values[field]}"
-                                         style="width: 550px; height: 50px;"/>
+            <p:panel id="panelRepeatWrapper2">
 
-                        <p:commandButton value="x" action="#{helloWorld.onDelete(field)}" update="main" onclick="submit()">
-                        </p:commandButton>
+                <ui:repeat id="panelRepeat1" value="#{helloWorld.listTextArea}" var="field" >
+                    <h:panelGrid columns="4">
+                        <h:outputText value="#{field.nomerRow}"
+                                      style="vertical-align: top; width: 200px;"/>
+                        <h:inputTextarea value="#{field.area}"
+                                         style="width: 550px; height: 50px;"/>
+                        <p:commandButton id="button1" value="x" actionListener="#{helloWorld.onDelete2(field)}"  update="form1:panelRepeatWrapper2"  />
+                        <p:message  for="button1" showDetail="true" showSummary="true"/>
                     </h:panelGrid>
+
                 </ui:repeat>
-            </h:panelGroup>
+
+            </p:panel>
         </p:panel>
     </h:form>
 </h:body>
